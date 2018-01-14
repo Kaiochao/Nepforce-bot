@@ -9,8 +9,9 @@ It does not matter a lot, but would I use [standard.js](https://standardjs.com/)
 
 ## Todo
 Make issue to add ideas
-- [] Hangman / boy
-- [] Custom profiles
+- Hangman / boy
+- Custom profiles
+- Make more todo's
 
 ## Contributing
 contributing.
