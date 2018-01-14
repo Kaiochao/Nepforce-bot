@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/morphable-sandbox/nepforce-bot#readme",
   "dependencies": {
+    "async": "^2.6.0",
     "discord.js": "^11.2.1"
   }
 }

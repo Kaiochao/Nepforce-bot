@@ -1,7 +1,9 @@
 # Nepforce Discord bot
 
 ## Links
-- Library: https://github.com/hydrabolt/discord.js
+- Libraries
+  - discordjs: https://github.com/hydrabolt/discord.js
+  - async: http://caolan.github.io/async/docs.html
 - Create test app: https://discordapp.com/developers/applications/me
 
 ## Code style

@@ -49,9 +49,12 @@ router.add('guess', message => {
   }
 
   let letter = message.content.split(' ')[1]
-  let hm = sessions.$actions.hangMan.getSession()
-  hm.guessLetter(letter)
-  message.reply(`${message.author.username} guessed the letter ${letter}`)
+  let hangman = sessions.$actions.hangMan.getSession()
+  
+  hangman.guessLetter(letter, result => {
+    message.reply(`${message.author.username} guessed a letter, \n ${result}`)
+  })
+
 })
 
 secretPromise.then(_ => {
