@@ -72,9 +72,7 @@ router.add('guess', message => {
   let letter = message.content.split(' ')[1]
   let hangman = sessions.$actions.hangMan.getSession()
   
-  hangman.guessLetter(letter, result => {
-    // message.reply(`${message.author.username} guessed a letter, \n ${result}`)
-  })
+  hangman.guessLetter(letter, _ => {})
 
 })
 

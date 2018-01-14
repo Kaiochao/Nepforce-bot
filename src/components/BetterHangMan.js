@@ -13,19 +13,28 @@ module.exports = class BetterHangMan
    */
   constructor(tries = 7)
   {
+    this.maxTries = tries
     this.tries = tries
     this.guessedLetters = []
     this.word = []
     this.result = []
     this.hasWon = null
+
     this.reactions = {
       win: word => {},
       lose: word => {},
-      guess: letter => {}
+      guess: (isRight, letter) => {}
     }
+
     this.setWord()
   }
 
+  /**
+   * Set reactive function
+   * @param {enum<win, lose, guess>} type
+   * @param {callable} callback
+   * @return {self}
+   */
   on (type, callback)
   {
     this.reactions[type] = callback
@@ -64,7 +73,7 @@ module.exports = class BetterHangMan
   /**
    * Check letter is in word
    * @param {string} letter
-   * @return {bool}
+   * @return {void}
    */
   checkLetterIsInWord(letter, callback)
   {
@@ -107,9 +116,9 @@ module.exports = class BetterHangMan
   }
 
   /**
-   * Guess a letter
+   * Guess a letter facade
    * @param {string} letter 
-   * @return {string} message
+   * @return {void}
    */
   guessLetter(letter, callback)
   {
