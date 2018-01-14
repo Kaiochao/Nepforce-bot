@@ -8,7 +8,7 @@
 - Create test app: https://discordapp.com/developers/applications/me
 
 ## Code style
-It does not matter a lot, but would I use [standard.js](https://standardjs.com/)
+It does not matter a lot, but I use [standard.js](https://standardjs.com/)
 
 ## Todo
 Make issue to add ideas
