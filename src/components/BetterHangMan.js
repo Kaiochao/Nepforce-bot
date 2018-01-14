@@ -80,7 +80,7 @@ module.exports = class BetterHangMan
         index++
         _callback()
       }, err => {
-        if (err) { console.log(err) }
+        if (err) throw err
         callback(isInWord)
       })
     }
@@ -106,20 +106,32 @@ module.exports = class BetterHangMan
     if (this.checkLetterHasBeenGuessed(letter))
     {
       callback('Letter has already been guessed')
+      return
     }
 
     this.checkLetterIsInWord(letter, isInWord => {
       if (this.hasWon)
       {
         callback(`The word has been guessed, it was "${this.word.join('')}"`)
+        return
       }
       else if (isInWord)
       {
         callback(`The letter "${letter}" is in the word`)
+        return
       }
       else
       {
-        callback(`The letter "${letter}" is not in the word`)
+        this.tries--
+        if (this.tries === 0)
+        {
+          callback(`You have lost, the word was "${this.word.join('')}"`)
+        }
+        else
+        {
+          callback(`The letter "${letter}" is not in the word`)
+        }
+        return
       }
     })
 
