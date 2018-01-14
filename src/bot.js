@@ -34,6 +34,27 @@ let router = new Router()
 
 router.add(['hangman', 'hangboi'], message => {
   sessions.$actions.hangMan.startSession()
+  let instance = sessions.$actions.hangMan.getSession()
+
+  instance.on('win', word => {
+    message.reply(`You guessed the word ${word}`)
+  })
+  
+  instance.on('lose', word => {
+    message.reply(`You lost, the word was ${word}`)
+  })
+
+  instance.on('guess', (isRight, letter) => {
+    if (isRight)
+    {
+      message.reply(`The letter ${letter} is in the word`)
+    }
+    else
+    {
+      message.reply(`The letter ${letter} is not in the word`)
+    }
+  })
+
   message.reply('New hang Nep session!');
 })
 
@@ -52,7 +73,7 @@ router.add('guess', message => {
   let hangman = sessions.$actions.hangMan.getSession()
   
   hangman.guessLetter(letter, result => {
-    message.reply(`${message.author.username} guessed a letter, \n ${result}`)
+    // message.reply(`${message.author.username} guessed a letter, \n ${result}`)
   })
 
 })

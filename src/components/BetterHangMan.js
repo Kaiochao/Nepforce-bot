@@ -18,7 +18,18 @@ module.exports = class BetterHangMan
     this.word = []
     this.result = []
     this.hasWon = null
+    this.reactions = {
+      win: word => {},
+      lose: word => {},
+      guess: letter => {}
+    }
     this.setWord()
+  }
+
+  on (type, callback)
+  {
+    this.reactions[type] = callback
+    return this
   }
 
   /**
@@ -112,11 +123,13 @@ module.exports = class BetterHangMan
     this.checkLetterIsInWord(letter, isInWord => {
       if (this.hasWon)
       {
+        this.reactions.win(this.word.join(''))
         callback(`The word has been guessed, it was "${this.word.join('')}"`)
         return
       }
       else if (isInWord)
       {
+        this.reactions.guess(true, letter)
         callback(`The letter "${letter}" is in the word`)
         return
       }
@@ -125,10 +138,12 @@ module.exports = class BetterHangMan
         this.tries--
         if (this.tries === 0)
         {
+          this.reactions.lose(this.word.join(''))
           callback(`You have lost, the word was "${this.word.join('')}"`)
         }
         else
         {
+          this.reactions.guess(false, letter)
           callback(`The letter "${letter}" is not in the word`)
         }
         return
