@@ -2,8 +2,9 @@
 
 ## Links
 - Libraries
-  - discordjs: https://github.com/hydrabolt/discord.js
-  - async: http://caolan.github.io/async/docs.html
+  - Discord.js: https://github.com/hydrabolt/discord.js
+  - Async: http://caolan.github.io/async/docs.html
+  - Request: https://github.com/request/request
 - Create test app: https://discordapp.com/developers/applications/me
 
 ## Code style
