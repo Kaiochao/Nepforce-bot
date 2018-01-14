@@ -22,6 +22,6 @@ contributing.
 - Set permission for bot
 - Create .secret in root and paste token into file
 - ```$ npm i```
-- node ./src/bot.js
+- ```$ node ./src/bot.js```
 - Make pull request once done
-- IMPORTANT: have fun! :Rocket:
+- IMPORTANT: have fun! :rocket:
