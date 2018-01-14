@@ -52,6 +52,11 @@ module.exports = class BetterHangMan
     return this
   }
 
+  getRandomWord()
+  {
+    // open words csv and choose a word
+  }
+
   /**
    * Check the letter has already been guessed
    * @param {string} letter 

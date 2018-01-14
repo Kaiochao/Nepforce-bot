@@ -1,6 +1,8 @@
 const fs = require('fs')
-const Discord = require("discord.js");
-const client = new Discord.Client();
+const os = require("os")
+
+const Discord = require("discord.js")
+const client = new Discord.Client()
 
 // Components
 const Router = require('./components/Router')
@@ -32,8 +34,11 @@ let sessions = new State('Sessions', {
 // Add routes
 let router = new Router()
 
+// New hangman instance
 router.add(['hangman', 'hangboi'], message => {
   sessions.$actions.hangMan.startSession()
+
+  // Reactive callbacks
   let instance = sessions.$actions.hangMan.getSession()
 
   instance.on('win', word => {
@@ -58,11 +63,44 @@ router.add(['hangman', 'hangboi'], message => {
   message.reply('New hang Nep session!');
 })
 
+// Stop hangman instance
 router.add('end me', message => {
   sessions.$actions.hangMan.stopSession()
   message.reply('Ending the hang Nep session')
 })
 
+// add a word to hangman
+router.add('add word', message => {
+  let content = message.content.split(' ')
+  let word = content[2]
+  let path = './src/data/words.csv'
+  let attachments = message.attachments.array()
+  let img = ''
+
+  if (attachments.length > 0)
+  {
+    img = attachments[0]['url']
+  }
+
+  if (word === '' || typeof word === 'undefined')
+  {
+    return
+  }
+
+  // make sure its a image from cdn
+  if (img.indexOf('https://') === -1)
+  {
+    img = ''
+  }
+
+  // append to csv file
+  fs.appendFile(path, `${os.EOL}${word},${img}`, 'utf8', err => {
+    if (err) throw err
+    message.reply(`Added ${word} to the list`)
+  })
+})
+
+// Guess a letter or word
 router.add('guess', message => {
   if (!sessions.$actions.hangMan.checkSession())
   {
@@ -73,11 +111,10 @@ router.add('guess', message => {
   let hangman = sessions.$actions.hangMan.getSession()
   
   hangman.guessLetter(letter, _ => {})
-
 })
 
+// Watch Discord messages
 secretPromise.then(_ => {
-
   // make calls or something, idk
   client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
