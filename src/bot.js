@@ -1,6 +1,7 @@
 const fs = require('fs')
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const Router = require('./components/Router')
 
 // Bot functionality
 const BetterHangMan = require('./components/BetterHangMan')
@@ -16,6 +17,37 @@ let secretPromise = new Promise((resolve, reject) => {
   })
 })
 
+// make sure no new session gets created
+// when a session already has started
+let sessions = {
+  hangMan: null
+}
+
+/**
+ * Add routes
+ */
+let router = new Router()
+router.add(['hangman', 'hangboi'], message => {
+  sessions.hangMan = new BetterHangMan()
+  message.reply('New hang Nep session!');
+})
+
+router.add('end me', message => {
+  sessions.hangMan = null
+  message.reply('Ending the hang Nep session')
+})
+
+router.add('guess', message => {
+  if (sessions.hangMan === null)
+  {
+    return;
+  }
+
+  let letter = message.content.split(' ')[1]
+  sessions.hangMan.guessLetter(letter)
+  message.reply(`${message.author.username} guessed the letter ${letter}`)
+})
+
 secretPromise.then(_ => {
 
   // make calls or something, idk
@@ -23,26 +55,10 @@ secretPromise.then(_ => {
     console.log(`Logged in as ${client.user.tag}!`);
   });
 
-  let hangManInstance = null
-  client.on('message', msg => {
-    if (msg.content === 'hangNep')
-    {
-      hangManInstance = new BetterHangMan()
-      msg.reply('New hang Nep session!');
-    }
-
-    if (msg.content === 'end me')
-    {
-      msg.reply('Ending the hang Nep session')
-      hangManInstance = null
-    }
-
-    if (hangManInstance !== null && msg.content.length === 1)
-    {
-      hangManInstance.guessLetter(msg.content)
-      msg.reply(`Guessed letter ${msg.content} you ${hangManInstance.tries} tries left`)
-    }
-
+  client.on('message', message => {
+    // set request and execute router
+    router.setRequest(message)
+    router.execute()
   });
 
 })
