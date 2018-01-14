@@ -110,7 +110,7 @@ router.add('guess', message => {
   let letter = message.content.split(' ')[1]
   let hangman = sessions.$actions.hangMan.getSession()
   
-  hangman.guessLetter(letter, _ => {})
+  hangman.guessLetter(letter.toLowerCase(), _ => {})
 })
 
 // Watch Discord messages

@@ -48,7 +48,7 @@ module.exports = class BetterHangMan
    */
   setWord(word = 'test-word')
   {
-    this.word = word.split('')
+    this.word = word.toLowerCase().split('')
     return this
   }
 
