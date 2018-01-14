@@ -4,6 +4,13 @@
 - Library: https://github.com/hydrabolt/discord.js
 - Create test app: https://discordapp.com/developers/applications/me
 
+## Code style
+It does not matter a lot, but would I use [standard.js](https://standardjs.com/)
+
+## Todo
+Make issue to add ideas
+- [] Hangman / boy
+- [] Custom profiles
 
 ## Contributing
 contributing.
@@ -13,7 +20,7 @@ contributing.
 - Create discord app
 - Set permission for bot
 - Create .secret in root and paste token into file
-- $ npm i
+- ```$ npm i```
 - node ./src/bot.js
 - Make pull request once done
-- IMPORTANT: have fun!
+- IMPORTANT: have fun! :Rocket:

@@ -10,7 +10,7 @@ const State = require('./components/State')
 // get api code from .secret file
 let pathToSecret = './.secret'
 let secretPromise = new Promise((resolve, reject) => {
-  fs.readFile(pathToSecret, "utf8", (err, secret) => {
+  fs.readFile(pathToSecret, 'utf8', (err, secret) => {
     if (err) reject(err)
     client.login(secret)    
     resolve()
@@ -33,23 +33,23 @@ let sessions = new State('Sessions', {
 let router = new Router()
 
 router.add(['hangman', 'hangboi'], message => {
-  sessions.$actions.hangMan.startHangMan()
+  sessions.$actions.hangMan.startSession()
   message.reply('New hang Nep session!');
 })
 
 router.add('end me', message => {
-  sessions.$actions.hangMan.stopHangMan()
+  sessions.$actions.hangMan.stopSession()
   message.reply('Ending the hang Nep session')
 })
 
 router.add('guess', message => {
-  if (!sessions.$actions.hangMan.checkHangMan())
+  if (!sessions.$actions.hangMan.checkSession())
   {
     return;
   }
 
   let letter = message.content.split(' ')[1]
-  let hm = sessions.$actions.hangMan.getHangMan()
+  let hm = sessions.$actions.hangMan.getSession()
   hm.guessLetter(letter)
   message.reply(`${message.author.username} guessed the letter ${letter}`)
 })
@@ -59,7 +59,9 @@ secretPromise.then(_ => {
   // make calls or something, idk
   client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    client.user.setGame('Whatever bot\'s play lole')
   });
+
 
   client.on('message', message => {
     // set request and execute router

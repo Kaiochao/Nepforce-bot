@@ -2,19 +2,23 @@ const BetterHangMan = require('./../components/BetterHangMan')
 
 module.exports = self => {
   return {
-    startHangMan() {
+    startSession()
+    {
       self.$data.hangMan = new BetterHangMan()
     },
-    stopHangMan() {
+    stopSession()
+    {
       self.$data.hangMan = null
     },
-    checkHangMan() {
+    checkSession()
+    {
       if (self.$data.hangMan === null) {
         return false
       }
       return true
     },
-    getHangMan() {
+    getSession()
+    {
       return self.$data.hangMan
     }
   }
